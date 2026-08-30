@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Belajarku">
+    <meta name="application-name" content="Belajarku">
+
+    <title>Belajarku — Modern UTBK Study Dashboard</title>
+
+    <link rel="manifest" id="manifest-link" href="data:application/manifest+json;base64,eyJuYW1lIjoiQmVsYWphcmt1IiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJzdGFydF91cmwiOiIuLyIsInRoZW1lX2NvbG9yIjoiIzBmMTcyYSIsImJhY2tncm91bmRfY29sb3ciOiIjMGYxNzJhIiwic2hvcnRfbmFtZSI6IkJlbGFqYXJrdSIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWwsPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJyB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMic+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdncmFkJyB4MT0nMCUnIHkxPScwJScgeDI9JzEwMCUnIHkyPScxMDAlJz48c3RvcCBvZmZzZXQ9JzAlJyBzdHlsZT0nc3RvcC1jb2xvcjolMjM2MzY2ZjE7c3RvcC1vcGFjaXR5OjEnIC8+PHN0b3Agb2Zmc2V0PScxMDAlJyBzdHlsZT0nc3RvcC1jb2xvcjolMjM4YjVjZjY7c3RvcC1vcGFjaXR5OjEnIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzUxMicgaGVpZ2h0PSc1MTInIHJ4PScxMjgnIGZpbGw9J3VybCglMjNncmFkKScvPjxwYXRoIGZpbGw9JyUyM2ZmZmZmZicgZD0nTTI1NiAxMjhMNjQgMjI0bDE5MiA5NiAxNDQtNzJ2ODhoNDhWMjI0TDI1NiAxMjh6bTAgMjE2bC0xMjgtNjR2NjRjMCAzNS4zIDU3LjMgNjQgMTI4IDY0czEyOC0yOC43IDEyOC02NHYtNjRsLTEyOCA2NHonLz48L3N2Zz4iLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%236366f1;stop-opacity:1' /><stop offset='100%' style='stop-color:%238b5cf6;stop-opacity:1' /></linearGradient></defs><rect width='512' height='512' rx='128' fill='url(%23grad)'/><path fill='%23ffffff' d='M256 128L64 224l192 96 144-72v88h48V224L256 128zm0 216l-128-64v64c0 35.3 57.3 64 128 64s128-28.7 128-64v-64l-128 64z'/></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%236366f1;stop-opacity:1' /><stop offset='100%' style='stop-color:%238b5cf6;stop-opacity:1' /></linearGradient></defs><rect width='512' height='512' rx='128' fill='url(%23grad)'/><path fill='%23ffffff' d='M256 128L64 224l192 96 144-72v88h48V224L256 128zm0 216l-128-64v64c0 35.3 57.3 64 128 64s128-28.7 128-64v-64l-128 64z'/></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9' },
+                        slateBg: '#0f172a', cardDark: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            user-select: none; -webkit-tap-highlight-color: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { height: 5px; width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #64748b; border-radius: 99px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        #mobile-sidebar { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        #mobile-sidebar-overlay { transition: opacity 0.3s ease-in-out; }
+
+        .animate-fadeIn { animation: fadeIn 0.25s ease-in-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animasi Api Imut */
+        @keyframes flame-pulse {
+            0%, 100% { transform: scale(1) rotate(-3deg); opacity: 0.9; }
+            50% { transform: scale(1.15) rotate(3deg); opacity: 1; text-shadow: 0 0 10px rgba(245, 158, 11, 0.6); }
+        }
+        .animate-flame { display: inline-block; animation: flame-pulse 1.2s infinite ease-in-out; transform-origin: bottom center; }
+
+        /* Toast Animasi */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+        .toast-enter { animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .toast-exit { animation: fadeOut 0.3s ease forwards; }
+
+        #lightbox-img-container { touch-action: none; overflow: hidden; }
+        #lightbox-img { cursor: grab; will-change: transform; transition: none !important; }
+        #lightbox-img.dragging { cursor: grabbing; }
+    </style>
+</head>
+<body id="app-body" class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col md:flex-row transition-colors duration-200 relative">
+
+    <div id="toast-container" class="fixed top-20 md:top-5 right-5 z-[200] flex flex-col gap-3 pointer-events-none w-72"></div>
+
+    <header class="md:hidden sticky top-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-3">
+            <button onclick="toggleMobileSidebar()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-none hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+            <div>
+                <h1 class="font-extrabold text-slate-900 dark:text-white tracking-tight text-sm leading-none">BELAJARKU</h1>
+                <p class="text-[10px] text-indigo-500 font-semibold tracking-wider uppercase mt-0.5">UTBK Dashboard</p>
+            </div>
+        </div>
+        <button onclick="toggleTheme()" class="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-xs font-bold transition" title="Ganti Mode">
+            🌙
+        </button>
+    </header>
+
+    <div id="mobile-sidebar-overlay" onclick="toggleMobileSidebar()" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 opacity-0 transition-opacity"></div>
+    <aside id="mobile-sidebar" class="fixed top-0 left-0 bottom-0 w-72 bg-white dark:bg-slate-900 z-50 transform -translate-x-full transition-transform duration-300 flex flex-col justify-between shadow-2xl border-r border-slate-200 dark:border-slate-800">
+        <div>
+            <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                    <h2 class="font-black text-slate-900 dark:text-white text-base tracking-tight">BELAJARKU</h2>
+                    <p class="text-[11px] text-indigo-500 font-semibold">UTBK Study Dashboard</p>
+                </div>
+                <button onclick="toggleMobileSidebar()" class="p-2 rounded-xl text-slate-400 hover:text-slate-200">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <nav class="p-3 space-y-1 text-xs font-semibold custom-scrollbar overflow-y-auto max-h-[calc(100vh-140px)]">
+                <button onclick="mobileSwitchTab(1)" id="m-nav-1" class="w-full text-left px-3.5 py-3 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60">🏠 Beranda</button>
+                <button onclick="mobileSwitchTab(2)" id="m-nav-2" class="w-full text-left px-3.5 py-3 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60">📅 Kalender Belajar</button>
+                <button onclick="mobileSwitchTab(3)" id="m-nav-3" class="w-full text-left px-3.5 py-3 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60">▶️ Mulai Belajar</button>
+                <button onclick="mobileSwitchTab(4)" id="m-nav-4" class="w-full text-left px-3.5 py-3 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60">📖 Belajar Harian</button>
+                <button onclick="mobileSwitchTab(5)" id="m-nav-5" class="w-full text-left px-3.5 py-3 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60">❌ Bank Kesalahan</button>
+                <button onclick="mobileSwitchTab(6)" id="m-nav-6" class="w-full text-left px-3.5 py-3 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60">🏆 Tryout</button>
+                <button onclick="mobileSwitchTab(7)" id="m-nav-7" class="w-full text-left px-3.5 py-3 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60">📈 Progress Saya</button>
+                <button onclick="mobileSwitchTab(8)" id="m-nav-8" class="w-full text-left px-3.5 py-3 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60">🏅 Pencapaian</button>
+                <button onclick="mobileSwitchTab(9)" id="m-nav-9" class="w-full text-left px-3.5 py-3 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60">⚙️ Pengaturan</button>
+                <button onclick="mobileSwitchTab(10)" id="m-nav-10" class="w-full text-left px-3.5 py-3 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60">ℹ️ Tentang Belajarku</button>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800 text-[11px] text-slate-400 font-medium text-center">
+            Belajarku App &copy; 2026
+        </div>
+    </aside>
+
+    <button onclick="switchTab(4)" title="Tambah Belajar Harian" class="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-indigo-500/40 hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none">
+        <i data-lucide="plus" class="w-7 h-7 stroke-[2.5]"></i>
+    </button>
+
+    <aside class="hidden md:flex w-64 bg-white/80 dark:bg-slate-900/90 backdrop-blur-xl border-r border-slate-200/80 dark:border-slate-800/80 flex-shrink-0 flex-col justify-between sticky top-0 h-screen z-50">
+        <div>
+            <div class="p-6 border-b border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2.5 bg-gradient-to-tr from-indigo-600 to-violet-500 rounded-xl text-white shadow-md shadow-indigo-500/20">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-base text-slate-900 dark:text-white tracking-tight">Belajarku</h1>
+                        <span class="text-[10px] font-semibold text-indigo-500 uppercase tracking-widest">Dashboard</span>
+                    </div>
+                </div>
+                <button onclick="toggleTheme()" class="p-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-xs font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-200" title="Ganti Mode">
+                    ☀️
+                </button>
+            </div>
+
+            <nav class="p-3 space-y-1 text-xs font-semibold custom-scrollbar max-h-[calc(100vh-140px)] overflow-y-auto">
+                <div class="px-3 pt-2 pb-1 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Menu Utama</div>
+                <button onclick="switchTab(1)" id="nav-1" class="w-full text-left px-3.5 py-2.5 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100">🏠 Beranda</button>
+                <button onclick="switchTab(2)" id="nav-2" class="w-full text-left px-3.5 py-2.5 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100">📅 Kalender Belajar</button>
+                <button onclick="switchTab(3)" id="nav-3" class="w-full text-left px-3.5 py-2.5 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100">▶️ Mulai Belajar</button>
+                <button onclick="switchTab(4)" id="nav-4" class="w-full text-left px-3.5 py-2.5 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100">📖 Belajar Harian</button>
+                
+                <div class="px-3 pt-4 pb-1 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Belajar & Evaluasi</div>
+                <button onclick="switchTab(5)" id="nav-5" class="w-full text-left px-3.5 py-2.5 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100">❌ Bank Kesalahan</button>
+                <button onclick="switchTab(6)" id="nav-6" class="w-full text-left px-3.5 py-2.5 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100">🏆 Tryout</button>
+                <button onclick="switchTab(7)" id="nav-7" class="w-full text-left px-3.5 py-2.5 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100">📈 Progress Saya</button>
+                <button onclick="switchTab(8)" id="nav-8" class="w-full text-left px-3.5 py-2.5 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100">🏅 Pencapaian</button>
+                
+                <div class="px-3 pt-4 pb-1 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Lainnya</div>
+                <button onclick="switchTab(9)" id="nav-9" class="w-full text-left px-3.5 py-2.5 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100">⚙️ Pengaturan</button>
+                <button onclick="switchTab(10)" id="nav-10" class="w-full text-left px-3.5 py-2.5 rounded-xl transition flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100">ℹ️ Tentang</button>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-slate-200/80 dark:border-slate-800/80 text-[11px] text-slate-400 font-medium text-center">
+            Belajarku App &copy; 2026
+        </div>
+    </aside>
+
+    <main class="flex-grow p-4 md:p-8 overflow-y-auto min-h-screen max-w-7xl mx-auto w-full space-y-6">
+
+        <section id="page-1" class="space-y-6 animate-fadeIn">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200/80 dark:border-slate-800/80 shadow-sm transition-all duration-300">
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+                    <div class="flex items-center space-x-5 w-full lg:w-auto">
+                        <div class="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center border border-slate-200 dark:border-slate-700/60 overflow-hidden flex-shrink-0 shadow-inner">
+                            <i data-lucide="building-2" class="w-9 h-9 text-indigo-500" id="dash-logo-placeholder"></i>
+                            <img id="dash-univ-logo" src="" class="w-full h-full object-contain hidden" alt="Logo Univ">
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight" id="dash-user-name">Siswa Ambis</h2>
+                            <p class="text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-1.5 mt-1 text-xs md:text-sm"><i data-lucide="target" class="w-4 h-4"></i> Target Univ: <span id="dash-target-univ" class="font-bold">Belum Diatur</span></p>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs font-medium mt-1">Jurusan: <span id="dash-target-major" class="font-semibold text-slate-800 dark:text-slate-200">Belum Diatur</span> | Target Skor: <span id="dash-target-score" class="font-bold text-indigo-600 dark:text-indigo-400">0</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full lg:w-auto flex flex-col sm:flex-row gap-4 items-center">
+                        <div class="w-full sm:w-auto bg-gradient-to-br from-indigo-600 to-violet-700 border border-indigo-400/30 p-5 rounded-2xl flex flex-col items-center justify-center min-w-[200px] text-center shadow-lg shadow-indigo-500/10 text-white">
+                            <div class="flex items-center gap-1.5 text-indigo-100 font-bold text-xs uppercase tracking-wider mb-1"><i data-lucide="timer" class="w-3.5 h-3.5"></i> UTBK Countdown</div>
+                            <span class="text-3xl font-black" id="dash-utbk-countdown">0</span>
+                            <span class="text-[11px] text-indigo-200 font-medium mt-0.5">Hari Lagi</span>
+                        </div>
+                        
+                        <div class="w-full sm:w-72 bg-slate-50 dark:bg-slate-800/50 border-l-4 border-amber-500 p-4 rounded-r-2xl border-y border-r border-slate-200 dark:border-slate-700/60">
+                            <h4 class="font-extrabold text-amber-600 dark:text-amber-400 text-[11px] uppercase tracking-wider mb-1 flex items-center gap-1.5"><i data-lucide="quote" class="w-3.5 h-3.5"></i> Motivasi Hari Ini</h4>
+                            <p id="dash-motivation" class="text-slate-600 dark:text-slate-300 italic text-xs font-medium leading-relaxed">"Belum ada motivasi yang diatur di Pengaturan."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 flex items-center space-x-4 shadow-sm">
+                    <div class="p-3 bg-blue-500/10 text-blue-500 rounded-xl"><i data-lucide="clock" class="w-5 h-5"></i></div>
+                    <div><p class="text-xs text-slate-500 font-medium">Total Waktu Belajar</p><h3 class="text-lg font-bold mt-0.5 text-slate-900 dark:text-white" id="dash-total-time">0 Jam</h3></div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 flex items-center space-x-4 shadow-sm">
+                    <div class="p-3 bg-emerald-500/10 text-emerald-500 rounded-xl"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
+                    <div><p class="text-xs text-slate-500 font-medium">Soal Dikerjakan</p><h3 class="text-lg font-bold mt-0.5 text-slate-900 dark:text-white" id="dash-total-questions">0 Soal</h3></div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 flex items-center space-x-4 shadow-sm">
+                    <div class="p-3 bg-purple-500/10 text-purple-500 rounded-xl"><i data-lucide="award" class="w-5 h-5"></i></div>
+                    <div><p class="text-xs text-slate-500 font-medium">TO UTBK Diikuti</p><h3 class="text-lg font-bold mt-0.5 text-slate-900 dark:text-white" id="dash-total-to">0 Kali</h3></div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 flex items-center space-x-4 shadow-sm">
+                    <div class="p-3 bg-rose-500/10 text-rose-500 rounded-xl"><i data-lucide="trending-up" class="w-5 h-5"></i></div>
+                    <div><p class="text-xs text-slate-500 font-medium">Rata-rata Skor UTBK</p><h3 class="text-lg font-bold mt-0.5 text-slate-900 dark:text-white" id="dash-avg-score">0</h3></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                    <h3 class="font-bold text-sm mb-4 text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="activity" class="w-4 h-4 text-indigo-500"></i> Aktivitas Terakhir</h3>
+                    <div class="space-y-3" id="dash-recent-list">
+                        <p class="text-slate-400 text-xs italic">Belum ada catatan aktivitas.</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-1 flex items-center gap-2"><i data-lucide="flame" class="w-4 h-4 text-amber-500"></i> Streak Belajar Active</h3>
+                        <p class="text-xs text-slate-500 mb-4">Konsistensi harian berdasarkan log belajar yang tersimpan.</p>
+                        <div class="text-center py-6 bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-slate-200 dark:border-slate-800/80">
+                            <span class="text-3xl font-black text-amber-500 tracking-tight" id="dash-streak">0 Hari</span>
+                        </div>
+                    </div>
+                    <button onclick="switchTab(3)" class="mt-5 w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-xl font-bold transition duration-200 text-xs shadow-md shadow-indigo-500/10">Mulai Belajar Sekarang</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-2" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <div>
+                        <h2 class="text-lg font-bold flex items-center gap-2 text-slate-900 dark:text-white"><i data-lucide="calendar" class="w-5 h-5 text-emerald-500"></i> Kalender Belajar & Dokumentasi Foto</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Warna Kotak: <span class="text-rose-500 font-bold">Merah</span> (Tidak Belajar), <span class="text-emerald-500 font-bold">Hijau</span> (Belajar Harian), <span class="text-purple-500 font-bold">Ungu</span> (Ada Tryout).</p>
+                    </div>
+                    <div class="flex items-center space-x-2 self-end md:self-auto">
+                        <button onclick="changeMonth(-1)" class="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-slate-700 dark:text-slate-200 transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                        <span id="calendar-month-year" class="font-bold text-sm min-w-[130px] text-center text-slate-800 dark:text-slate-200"></span>
+                        <button onclick="changeMonth(1)" class="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-slate-700 dark:text-slate-200 transition"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-7 gap-2 text-center font-bold text-[11px] text-slate-400 uppercase tracking-wider mb-2">
+                    <div>Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
+                </div>
+                <div id="calendar-grid" class="grid grid-cols-7 gap-2"></div>
+            </div>
+
+            <div id="calendar-detail-card" class="hidden bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl space-y-5">
+                <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-3">
+                    <h3 class="font-bold text-base text-slate-900 dark:text-white" id="detail-date-title">Detail Tanggal</h3>
+                    <button onclick="closeDetailCard()" class="text-slate-400 hover:text-slate-200 p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+                </div>
+
+                <div id="detail-content" class="space-y-4"></div>
+
+                <div class="border-t border-slate-200 dark:border-slate-800 pt-4">
+                    <button onclick="openCalendarAddForm()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Tambah Aktivitas & Foto
+                    </button>
+
+                    <form id="calendar-add-form" onsubmit="saveCalendarSession(event)" class="hidden mt-4 space-y-3 bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+                        <input type="hidden" id="cal-selected-date" value="">
+                        <input type="hidden" id="cal-edit-id" value="">
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Mata Pelajaran</label>
+                            <select id="cal-category" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs">
+                                <option value="Penalaran Umum">Penalaran Umum (PU)</option>
+                                <option value="Pemahaman Bacaan">Pemahaman Bacaan (PBM)</option>
+                                <option value="Pengetahuan Umum">Pengetahuan Umum (PPU)</option>
+                                <option value="Pengetahuan Kuantitatif">Pengetahuan Kuantitatif (PK)</option>
+                                <option value="Literasi Bahasa Indonesia">Literasi B. Indo</option>
+                                <option value="Literasi Bahasa Inggris">Literasi B. Inggris</option>
+                                <option value="Penalaran Matematika">Penalaran MTK</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Durasi (Jam)</label>
+                                <input type="number" step="0.1" id="cal-duration" placeholder="1.0" required class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Jumlah Soal</label>
+                                <input type="number" id="cal-questions" placeholder="0" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Judul / Sumber Belajar</label>
+                            <input type="text" id="cal-title" placeholder="Contoh: Latihan Bab 2" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Catatan</label>
+                            <textarea id="cal-notes" rows="2" placeholder="Catatan singkat..." class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs"></textarea>
+                        </div>
+                        <div id="cal-photo-hint" class="text-[10px] text-amber-500 font-bold hidden mb-1">Membunggah foto baru akan menimpa foto lama. Biarkan kosong jika tidak ingin mengganti foto.</div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Foto Kegiatan / Soal (Bisa Multiple)</label>
+                            <input type="file" id="cal-photos" accept="image/*" multiple class="w-full text-xs text-slate-500">
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="closeCalendarAddForm()" class="w-1/3 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 py-2 rounded-xl text-xs font-bold transition">Batal</button>
+                            <button type="submit" id="cal-submit-btn" class="w-2/3 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-xs font-bold transition">Simpan Aktivitas</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-3" class="hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-col items-center justify-center text-center space-y-3">
+                    <span class="text-[11px] font-extrabold text-indigo-500 uppercase tracking-wider flex items-center gap-1.5"><i data-lucide="timer" class="w-4 h-4"></i> Timer Belajar Custom</span>
+                    
+                    <div class="flex items-center gap-1.5 justify-center my-1">
+                        <div class="flex flex-col items-center">
+                            <label class="text-[9px] text-slate-400 font-bold uppercase mb-1">Jam</label>
+                            <input type="number" id="timer-hours" min="0" max="23" value="0" onchange="resetTimer()" class="w-12 text-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-1 text-xs font-bold text-slate-800 dark:text-slate-200">
+                        </div>
+                        <span class="font-bold text-slate-400 mt-3">:</span>
+                        <div class="flex flex-col items-center">
+                            <label class="text-[9px] text-slate-400 font-bold uppercase mb-1">Menit</label>
+                            <input type="number" id="timer-minutes" min="0" max="59" value="25" onchange="resetTimer()" class="w-12 text-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-1 text-xs font-bold text-slate-800 dark:text-slate-200">
+                        </div>
+                        <span class="font-bold text-slate-400 mt-3">:</span>
+                        <div class="flex flex-col items-center">
+                            <label class="text-[9px] text-slate-400 font-bold uppercase mb-1">Detik</label>
+                            <input type="number" id="timer-seconds-input" min="0" max="59" value="0" onchange="resetTimer()" class="w-12 text-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-1 text-xs font-bold text-slate-800 dark:text-slate-200">
+                        </div>
+                    </div>
+
+                    <div class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-wider my-2 font-mono" id="timer-display">00:25:00</div>
+
+                    <div class="flex items-center space-x-2">
+                        <button onclick="toggleTimer()" id="timer-start-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-xl font-bold text-xs transition">Start</button>
+                        <button onclick="resetTimer()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 px-4 py-2 rounded-xl font-bold text-xs transition">Reset</button>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-3 flex items-center gap-2"><i data-lucide="list-todo" class="w-4 h-4 text-emerald-500"></i> Planner Belajar</h3>
+                    <form onsubmit="savePlannerTask(event)" class="space-y-2 mb-4">
+                        <input type="date" id="planner-date" required class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200">
+                        <select id="planner-category" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200">
+                            <option value="Penalaran Umum">Penalaran Umum (PU)</option>
+                            <option value="Pemahaman Bacaan">Pemahaman Bacaan (PBM)</option>
+                            <option value="Pengetahuan Umum">Pengetahuan Umum (PPU)</option>
+                            <option value="Pengetahuan Kuantitatif">Pengetahuan Kuantitatif (PK)</option>
+                            <option value="Literasi Bahasa Indonesia">Literasi B. Indo</option>
+                            <option value="Literasi Bahasa Inggris">Literasi B. Inggris</option>
+                            <option value="Penalaran Matematika">Penalaran MTK</option>
+                        </select>
+                        <input type="text" id="planner-title" placeholder="Target belajar hari ini..." required class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200">
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-1.5 rounded-xl font-bold text-xs transition">Tambah Planner</button>
+                    </form>
+                    <div id="planner-list" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar"></div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-3 flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4 text-cyan-500"></i> Checklist To-Do Harian</h3>
+                    <form onsubmit="saveTodoItem(event)" class="flex gap-2 mb-4">
+                        <input type="text" id="todo-text" placeholder="Tugas baru..." required class="flex-grow bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200">
+                        <button type="submit" class="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition">Tambah</button>
+                    </form>
+                    <div id="todo-list" class="space-y-2 max-h-56 overflow-y-auto custom-scrollbar"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-4" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                <h2 class="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2"><i data-lucide="book-open" class="w-5 h-5 text-cyan-500"></i> Form Catatan Belajar Harian</h2>
+                <form onsubmit="saveStudySession(event)" class="space-y-4">
+                    <input type="hidden" id="edit-study-id" value="">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Tanggal</label>
+                            <input type="date" id="study-date" required class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Durasi Belajar (Jam)</label>
+                            <input type="number" id="study-duration-hours" step="0.1" min="0" placeholder="Contoh: 1.5" required class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Lokasi Belajar</label>
+                            <input type="text" id="study-location" placeholder="Rumah / Perpustakaan" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Mata Pelajaran / Subtes</label>
+                            <select id="study-category" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                                <option value="Penalaran Umum">Penalaran Umum (PU)</option>
+                                <option value="Pemahaman Bacaan">Pemahaman Bacaan & Menulis (PBM)</option>
+                                <option value="Pengetahuan Umum">Pengetahuan & Pemahaman Umum (PPU)</option>
+                                <option value="Pengetahuan Kuantitatif">Pengetahuan Kuantitatif (PK)</option>
+                                <option value="Literasi Bahasa Indonesia">Literasi Bahasa Indonesia</option>
+                                <option value="Literasi Bahasa Inggris">Literasi Bahasa Inggris</option>
+                                <option value="Penalaran Matematika">Penalaran Matematika</option>
+                                <option value="Fisika">Fisika</option>
+                                <option value="Kimia">Kimia</option>
+                                <option value="Biologi">Biologi</option>
+                                <option value="Matematika">Matematika</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Jumlah Soal Dikerjakan</label>
+                            <input type="number" id="study-questions" min="0" placeholder="0" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Judul Buku / Sumber Belajar</label>
+                            <input type="text" id="book-title" placeholder="Nama buku atau modul..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Halaman / Bab Dituntaskan</label>
+                            <input type="text" id="book-pages" placeholder="Contoh: Hal 12-30 / Bab 3" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Foto Sampul Buku</label>
+                            <input type="file" id="book-cover-photo" accept="image/*" class="w-full text-xs text-slate-500 font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Foto Belajar (Bisa banyak)</label>
+                            <input type="file" id="study-photos" accept="image/*" multiple class="w-full text-xs text-slate-500 font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Foto Soal / Catatan (Bisa banyak)</label>
+                            <input type="file" id="question-photos" accept="image/*" multiple class="w-full text-xs text-slate-500 font-medium">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Catatan Tambahan & Evaluasi</label>
+                        <textarea id="study-notes" rows="3" placeholder="Pelajaran penting atau bagian yang masih bingung..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200"></textarea>
+                    </div>
+
+                    <button type="submit" id="main-study-submit-btn" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white py-2.5 rounded-xl font-bold transition text-xs shadow-md shadow-cyan-500/10">Simpan Log Belajar</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="page-5" class="hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-1 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-3 flex items-center gap-2"><i data-lucide="circle-x" class="w-4 h-4 text-rose-500"></i> Catat Kesalahan Soal</h3>
+                    <form onsubmit="saveMistake(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Subtes / Mapel</label>
+                            <select id="mistake-subtest" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200">
+                                <option value="PU">Penalaran Umum (PU)</option>
+                                <option value="PBM">Pemahaman Bacaan (PBM)</option>
+                                <option value="PPU">Pengetahuan Umum (PPU)</option>
+                                <option value="PK">Pengetahuan Kuantitatif (PK)</option>
+                                <option value="LIndo">Literasi B. Indonesia</option>
+                                <option value="LEng">Literasi B. Inggris</option>
+                                <option value="PM">Penalaran Matematika</option>
+                                <option value="Fisika">Fisika</option>
+                                <option value="Kimia">Kimia</option>
+                                <option value="Biologi">Biologi</option>
+                                <option value="Matematika">Matematika</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Topik / Materi Soal</label>
+                            <input type="text" id="mistake-material" placeholder="Contoh: Silogisme / Trik Geometri" required class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Ringkasan Soal</label>
+                            <textarea id="mistake-question" rows="2" placeholder="Garis besar pertanyaan..." required class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Penyelesaian / Kunci</label>
+                            <input type="text" id="mistake-answer" placeholder="Cara cepat atau rumusnya..." required class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Penyebab Salah</label>
+                            <select id="mistake-reason" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200">
+                                <option value="Teliti/Ceroboh">Kurang Teliti / Ceroboh</option>
+                                <option value="Lupa Rumus">Lupa Rumus / Konsep</option>
+                                <option value="Kehabisan Waktu">Kehabisan Waktu</option>
+                                <option value="Belum Pernah Belajar">Materi Belum Dipelajari</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-rose-600 hover:bg-rose-500 text-white py-2 rounded-xl font-bold text-xs transition">Simpan ke Bank Salah</button>
+                    </form>
+                </div>
+
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                        <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-3 flex items-center gap-2"><i data-lucide="flame" class="w-4 h-4 text-amber-500"></i> Topik Paling Sering Salah (Peringkat Kelemahan)</h3>
+                        <div id="mistake-ranking" class="space-y-2"></div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                        <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-3 flex items-center gap-2"><i data-lucide="list" class="w-4 h-4 text-rose-500"></i> Daftar Kesalahan Dicatat</h3>
+                        <div id="mistake-list" class="space-y-3 max-h-80 overflow-y-auto custom-scrollbar"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-6" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex items-center justify-center gap-2">
+                <button onclick="setTOType('utbk')" id="to-tab-utbk" class="flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all duration-200 text-center bg-indigo-600 text-white shadow-md">
+                    Tryout UTBK
+                </button>
+                <button onclick="setTOType('inten')" id="to-tab-inten" class="flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all duration-200 text-center bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">
+                    Tryout Mapel INTEN
+                </button>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                <h2 class="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2" id="to-form-title">
+                    <i data-lucide="file-check-2" class="w-5 h-5 text-purple-500"></i> Input Nilai Tryout UTBK
+                </h2>
+                
+                <form onsubmit="saveTOSession(event)" class="space-y-4">
+                    <input type="hidden" id="edit-to-id" value="">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Nama / Penyelenggara TO</label>
+                            <input type="text" id="to-title" placeholder="Contoh: TO #1 INTEN / GO" required class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Tanggal TO</label>
+                            <input type="date" id="to-date" required class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                        </div>
+                    </div>
+
+                    <div id="to-inputs-container"></div>
+
+                    <div class="p-4 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl border border-indigo-200 dark:border-indigo-800/50 flex justify-between items-center">
+                        <div>
+                            <p class="text-[11px] font-bold text-indigo-500 uppercase">Preview Skor Rata-rata</p>
+                            <span class="text-2xl font-black text-indigo-600 dark:text-indigo-400" id="to-avg-preview">0</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Evaluasi / Hambatan Pengerjaan</label>
+                        <textarea id="to-notes" rows="2" placeholder="Catatan kekurangan waktu, topik yang kurang dipahami..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200"></textarea>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button type="button" onclick="resetTOForm()" class="hidden w-1/3 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 py-2.5 rounded-xl font-bold transition text-xs" id="to-cancel-btn">Batal Edit</button>
+                        <button type="submit" id="to-submit-btn" class="w-full bg-purple-600 hover:bg-purple-500 text-white py-2.5 rounded-xl font-bold transition text-xs shadow-md shadow-purple-500/10">Simpan Nilai Tryout</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-4 flex items-center gap-2" id="to-history-title"><i data-lucide="history" class="w-4 h-4 text-indigo-500"></i> Riwayat Tryout UTBK</h3>
+                <div id="to-history-list" class="space-y-3"></div>
+            </div>
+        </section>
+
+        <section id="page-7" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex items-center justify-center gap-2">
+                <button onclick="setProgressType('utbk')" id="progress-tab-utbk" class="flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all duration-200 text-center bg-indigo-600 text-white shadow-md">
+                    Progress UTBK
+                </button>
+                <button onclick="setProgressType('inten')" id="progress-tab-inten" class="flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all duration-200 text-center bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">
+                    Progress Mapel INTEN
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 bg-gradient-to-br from-indigo-600 to-violet-700 text-white p-6 rounded-2xl shadow-lg shadow-indigo-500/10">
+                    <p class="text-[11px] font-bold uppercase tracking-wider text-indigo-200">Progress Menuju Target Skor</p>
+                    <div class="flex items-end gap-3 mt-1">
+                        <h3 class="text-3xl font-black"><span id="dash-progress-percent">0</span>%</h3>
+                        <p class="text-xs text-indigo-200 pb-1 font-medium">dari target <span id="dash-progress-target">0</span></p>
+                    </div>
+                    <div class="mt-4 h-3 rounded-full bg-white/20 overflow-hidden">
+                        <div id="dash-progress-bar" class="h-full bg-white rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-xs text-slate-400 uppercase tracking-wider mb-1">Analisis Otomatis</h4>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white" id="progress-analysis-title">Kelemahan Utama</h3>
+                        <p class="text-xs text-slate-500 mt-2 leading-relaxed" id="progress-analysis-desc">Sistem akan menganalisis subtes terendah dari riwayat TO kamu.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-4 flex items-center gap-2" id="trend-chart-title"><i data-lucide="trending-up" class="w-4 h-4 text-indigo-500"></i> Trend Rata-Rata Skor UTBK</h3>
+                    <div class="relative h-64">
+                        <canvas id="toTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-4 flex items-center gap-2" id="detail-chart-title"><i data-lucide="bar-chart-2" class="w-4 h-4 text-purple-500"></i> Grafik Detail Subtes (TO 1 sampai Akhir)</h3>
+                    <div class="relative h-64">
+                        <canvas id="subtestTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-4 flex items-center gap-2"><i data-lucide="pie-chart" class="w-4 h-4 text-emerald-500"></i> Distribusi Waktu Belajar Per Kategori</h3>
+                <div class="relative h-64 max-w-md mx-auto">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-8" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                <h2 class="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2"><i data-lucide="award" class="w-5 h-5 text-yellow-500"></i> Pencapaian & Lencana Kamu</h2>
+                <div id="badges-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+            </div>
+        </section>
+
+        <section id="page-9" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+                <h2 class="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2"><i data-lucide="settings" class="w-5 h-5 text-slate-400"></i> Pengaturan Profil & Target</h2>
+                <form onsubmit="saveSettings(event)" class="space-y-4 max-w-xl">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Nama Kamu</label>
+                        <input type="text" id="set-name" placeholder="Nama Lengkap" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Universitas Impian</label>
+                        <input type="text" id="set-univ" placeholder="Contoh: Universitas Gadjah Mada" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Jurusan Impian</label>
+                        <input type="text" id="set-major" placeholder="Contoh: Manajemen / Akuntansi" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Target Skor UTBK</label>
+                        <input type="number" id="set-score" placeholder="Contoh: 750" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Logo Universitas Target</label>
+                        <input type="file" id="set-logo" accept="image/*" class="w-full text-xs text-slate-500 font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-slate-400 mb-1">Kata Motivasi Diri</label>
+                        <textarea id="set-motivation" rows="3" placeholder="Tulis kalimat motivasi kamu di sini..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-xl font-bold transition text-xs shadow-md shadow-indigo-500/10">Simpan Pengaturan</button>
+                </form>
+
+                <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-wrap gap-3">
+                    <button onclick="exportData()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition">Export Data JSON</button>
+                    <label class="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition">
+                        Import Data JSON <input type="file" onchange="importData(event)" accept=".json" class="hidden">
+                    </label>
+                    <button id="pwa-install-btn" class="hidden bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4"></i> Install Belajarku
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-10" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm max-w-2xl mx-auto text-center space-y-4">
+                <div class="w-16 h-16 bg-gradient-to-tr from-indigo-600 to-violet-500 rounded-2xl text-white flex items-center justify-center mx-auto shadow-lg shadow-indigo-500/30">
+                    <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Belajarku</h2>
+                    <p class="text-xs font-bold text-indigo-500 mt-1 uppercase tracking-widest">Website by Farras Lahimul Ilmi</p>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-lg mx-auto">
+                    Belajarku adalah platform belajar yang dirancang untuk membantu mengatur kegiatan belajar, mencatat perkembangan, mengevaluasi hasil tryout, dan mempersiapkan UTBK dengan lebih terstruktur.
+                </p>
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 space-y-1">
+                    <p>Versi Dashboard: <span class="font-bold text-slate-600 dark:text-slate-300">4.0.0 (PWA & Achievements)</span></p>
+                    <p>&copy; 2026 Farras Lahimul Ilmi. All rights reserved.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="photo-lightbox" onclick="closeLightbox()" class="hidden fixed inset-0 z-[110] bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center overflow-hidden">
+            <button onclick="closeLightbox()" class="absolute top-2 right-2 z-10 bg-slate-800/80 text-white hover:text-slate-300 p-2 rounded-full">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div id="lightbox-img-container" class="w-full h-full flex items-center justify-center">
+                <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl select-none" onclick="event.stopPropagation()" draggable="false">
+            </div>
+            <p class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-slate-400 bg-slate-800/70 px-3 py-1 rounded-full pointer-events-none">🤏 Cubit / scroll untuk zoom • Geser untuk pindah • Dobel tap untuk zoom cepat</p>
+        </div>
+    </div>
+
+    <div id="confirm-settings-modal" class="hidden fixed inset-0 z-[120] bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-sm w-full p-6 space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
+                    <i data-lucide="help-circle" class="w-5 h-5"></i>
+                </div>
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white">Konfirmasi Perubahan</h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Yakin ingin menyimpan perubahan profil ini?</p>
+            <div class="flex gap-3 pt-1">
+                <button onclick="cancelSaveSettings()" class="flex-1 py-2.5 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition">Batal</button>
+                <button onclick="performSaveSettings()" class="flex-1 py-2.5 rounded-xl font-bold text-xs bg-indigo-600 hover:bg-indigo-500 text-white transition">Ya, Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm-delete-to-modal" class="hidden fixed inset-0 z-[120] bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-sm w-full p-6 space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-rose-500/10 text-rose-500 flex items-center justify-center">
+                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                </div>
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white">Hapus Data TO?</h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Apakah kamu yakin ingin menghapus data TO ini? Data yang dihapus tidak akan ditampilkan lagi.</p>
+            <div class="flex gap-3 pt-1">
+                <button onclick="cancelDeleteTO()" class="flex-1 py-2.5 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition">Batal</button>
+                <button onclick="performDeleteTO()" class="flex-1 py-2.5 rounded-xl font-bold text-xs bg-rose-600 hover:bg-rose-500 text-white transition">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm-delete-cal-modal" class="hidden fixed inset-0 z-[120] bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-sm w-full p-6 space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-rose-500/10 text-rose-500 flex items-center justify-center">
+                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                </div>
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white">Hapus Data Kalender?</h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Apakah kamu yakin ingin menghapus aktivitas belajar ini? Data akan dihapus permanen.</p>
+            <div class="flex gap-3 pt-1">
+                <button onclick="cancelDeleteCal()" class="flex-1 py-2.5 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition">Batal</button>
+                <button onclick="performDeleteCal()" class="flex-1 py-2.5 rounded-xl font-bold text-xs bg-rose-600 hover:bg-rose-500 text-white transition">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // PWA Install Prompt Logic
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBtn = document.getElementById('pwa-install-btn');
+            if (installBtn) installBtn.classList.remove('hidden');
+        });
+        document.getElementById('pwa-install-btn')?.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    document.getElementById('pwa-install-btn').classList.add('hidden');
+                }
+                deferredPrompt = null;
+            }
+        });
+        
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch((err) => {
+                    console.log('SW Registration failed or sw.js not present. (Ignore if running locally without files)');
+                });
+            });
+        }
+
+        // Toast Notification System
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let icon, bgColor, textColor;
+            if (type === 'success') {
+                icon = '<i class="fas fa-check-circle text-emerald-500"></i>';
+                bgColor = 'bg-white dark:bg-slate-900';
+                textColor = 'text-slate-800 dark:text-slate-200';
+            } else if (type === 'achievement') {
+                icon = '<i class="fas fa-trophy text-amber-500"></i>';
+                bgColor = 'bg-gradient-to-r from-amber-500 to-amber-600';
+                textColor = 'text-white';
+            } else {
+                icon = '<i class="fas fa-info-circle text-blue-500"></i>';
+                bgColor = 'bg-white dark:bg-slate-900';
+                textColor = 'text-slate-800 dark:text-slate-200';
+            }
+
+            toast.className = `toast-enter flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border border-slate-200/50 dark:border-slate-800 ${bgColor} ${textColor} text-xs font-bold`;
+            toast.innerHTML = `${icon} <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('toast-exit');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // Achievement Configuration
+        const ACHIEVEMENT_LIST = [
+            // Streak
+            { id: 'streak_1', title: 'Pemula Konsisten', desc: 'Belajar 1 hari', type: 'streak', req: 1 },
+            { id: 'streak_3', title: 'Pemanasan', desc: 'Belajar 3 hari beruntun', type: 'streak', req: 3 },
+            { id: 'streak_7', title: '7 Hari Konsisten', desc: 'Belajar 7 hari beruntun', type: 'streak', req: 7 },
+            { id: 'streak_14', title: 'Dua Minggu Fokus', desc: 'Belajar 14 hari beruntun', type: 'streak', req: 14 },
+            { id: 'streak_30', title: 'Sebulan Penuh', desc: 'Belajar 30 hari beruntun', type: 'streak', req: 30 },
+            { id: 'streak_60', title: 'Tak Terhentikan', desc: 'Belajar 60 hari beruntun', type: 'streak', req: 60 },
+            { id: 'streak_100', title: 'Legenda Belajar', desc: 'Belajar 100 hari beruntun', type: 'streak', req: 100 },
+            // Sesi Belajar
+            { id: 'sesi_1', title: 'Langkah Pertama', desc: 'Selesaikan 1 sesi belajar', type: 'sesi', req: 1 },
+            { id: 'sesi_10', title: 'Mulai Terbiasa', desc: 'Selesaikan 10 sesi belajar', type: 'sesi', req: 10 },
+            { id: 'sesi_25', title: 'Pejuang Ilmu', desc: 'Selesaikan 25 sesi belajar', type: 'sesi', req: 25 },
+            { id: 'sesi_50', title: 'Ratusan Jam', desc: 'Selesaikan 50 sesi belajar', type: 'sesi', req: 50 },
+            { id: 'sesi_100', title: 'Master Sesi', desc: 'Selesaikan 100 sesi belajar', type: 'sesi', req: 100 },
+            // Tryout
+            { id: 'to_1', title: 'Uji Nyali', desc: 'Mengikuti 1 TO', type: 'to', req: 1 },
+            { id: 'to_5', title: 'Suka Tantangan', desc: 'Mengikuti 5 TO', type: 'to', req: 5 },
+            { id: 'to_10', title: 'Evaluasi Rutin', desc: 'Mengikuti 10 TO', type: 'to', req: 10 },
+            { id: 'to_20', title: 'Gladiator TO', desc: 'Mengikuti 20 TO', type: 'to', req: 20 },
+            { id: 'to_50', title: 'Dewa Tryout', desc: 'Mengikuti 50 TO', type: 'to', req: 50 },
+            // Skor (UTBK max)
+            { id: 'skor_first', title: 'Pecah Telur', desc: 'Mendapat skor TO pertama', type: 'skor', req: 1 },
+            { id: 'skor_500', title: 'Tembus 500', desc: 'Mencapai skor UTBK 500', type: 'skor', req: 500 },
+            { id: 'skor_600', title: 'Tembus 600', desc: 'Mencapai skor UTBK 600', type: 'skor', req: 600 },
+            { id: 'skor_700', title: 'Tembus 700', desc: 'Mencapai skor UTBK 700', type: 'skor', req: 700 },
+            { id: 'skor_800', title: 'Tembus 800', desc: 'Mencapai skor UTBK 800', type: 'skor', req: 800 },
+            { id: 'skor_900', title: 'Tembus 900', desc: 'Mencapai skor UTBK 900', type: 'skor', req: 900 },
+            // Bank Kesalahan
+            { id: 'salah_5', title: 'Belajar Salah', desc: 'Mencatat 5 materi salah', type: 'salah', req: 5 },
+            { id: 'salah_10', title: 'Evaluasi Diri', desc: 'Mencatat 10 materi salah', type: 'salah', req: 10 },
+            { id: 'salah_25', title: 'Makin Paham', desc: 'Mencatat 25 materi salah', type: 'salah', req: 25 },
+            { id: 'salah_50', title: 'Analis Ahli', desc: 'Mencatat 50 materi salah', type: 'salah', req: 50 },
+            { id: 'salah_100', title: 'Master Evaluasi', desc: 'Mencatat 100 materi salah', type: 'salah', req: 100 }
+        ];
+
+        // IndexedDB Photo Storage System
+        let db;
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open("BelajarkuPhotosDB", 1);
+                request.onupgradeneeded = (e) => {
+                    db = e.target.result;
+                    if (!db.objectStoreNames.contains("photos")) db.createObjectStore("photos", { keyPath: "id", autoIncrement: true });
+                };
+                request.onsuccess = (e) => { db = e.target.result; resolve(db); };
+                request.onerror = (e) => reject(e);
+            });
+        }
+        function savePhotoToIDB(blobOrBase64) {
+            return new Promise((resolve) => {
+                if (!db) return resolve(null);
+                const tx = db.transaction("photos", "readwrite");
+                const store = tx.objectStore("photos");
+                const req = store.add({ data: blobOrBase64, createdAt: new Date() });
+                req.onsuccess = (e) => resolve(e.target.result);
+            });
+        }
+        function getPhotoFromIDB(id) {
+            return new Promise((resolve) => {
+                if (!id || !db) return resolve(null);
+                const tx = db.transaction("photos", "readonly");
+                const store = tx.objectStore("photos");
+                const req = store.get(id);
+                req.onsuccess = (e) => resolve(e.target.result ? e.target.result.data : null);
+                req.onerror = () => resolve(null);
+            });
+        }
+
+        // Global Application State
+        let appData = {
+            profile: { name: '', univ: '', major: '', targetScore: 700, motivation: '', logoB64: '' },
+            studyLogs: [], plannerTasks: [], todoItems: [], mistakes: [], toLogs: [], unlockedAchievements: []
+        };
+
+        let currentTOType = 'utbk';
+        let currentProgressType = 'utbk';
+        let calendarCurrentDate = new Date();
+
+        let trendChartInstance = null;
+        let subtestChartInstance = null;
+        let categoryChartInstance = null;
+
+        function performOneTimeReset() {
+            const hasReset = localStorage.getItem('belajarku_v4_reset_done');
+            if (!hasReset) {
+                if(!localStorage.getItem('belajarku_app_data')) {
+                    localStorage.setItem('belajarku_app_data', JSON.stringify(appData));
+                }
+                localStorage.setItem('belajarku_v4_reset_done', 'true');
+            }
+        }
+
+        async function loadAppData() {
+            performOneTimeReset();
+            const saved = localStorage.getItem('belajarku_app_data');
+            if (saved) {
+                try {
+                    appData = JSON.parse(saved);
+                    if (!appData.unlockedAchievements) appData.unlockedAchievements = [];
+                } catch(e) {}
+            }
+            if (appData.studyLogs) {
+                appData.studyLogs = appData.studyLogs.map(log => {
+                    if (!log.photos) log.photos = [];
+                    return log;
+                });
+            }
+        }
+
+        async function saveAppData() {
+            localStorage.setItem('belajarku_app_data', JSON.stringify(appData));
+        }
+
+        function calculateStreak() {
+            const logs = appData.studyLogs || [];
+            if (logs.length === 0) return 0;
+            const dates = [...new Set(logs.map(l => l.date))].sort().reverse();
+            let checkDate = new Date();
+            let checkStr = checkDate.toISOString().split('T')[0];
+            let streak = 0;
+            if (!dates.includes(checkStr)) {
+                checkDate.setDate(checkDate.getDate() - 1);
+                checkStr = checkDate.toISOString().split('T')[0];
+            }
+            while (dates.includes(checkStr)) {
+                streak++;
+                checkDate.setDate(checkDate.getDate() - 1);
+                checkStr = checkDate.toISOString().split('T')[0];
+            }
+            return streak;
+        }
+
+        function checkAchievements() {
+            let newUnlocks = [];
+            const totalSesi = (appData.studyLogs || []).length;
+            const totalTO = (appData.toLogs || []).length;
+            const totalSalah = (appData.mistakes || []).length;
+            const utbkLogs = (appData.toLogs || []).filter(t => t.type === 'utbk');
+            const maxSkor = utbkLogs.length > 0 ? Math.max(...utbkLogs.map(t => parseFloat(t.average) || 0)) : 0;
+            const currentStreak = calculateStreak();
+
+            ACHIEVEMENT_LIST.forEach(ach => {
+                if (!appData.unlockedAchievements.includes(ach.id)) {
+                    let earned = false;
+                    if (ach.type === 'streak' && currentStreak >= ach.req) earned = true;
+                    if (ach.type === 'sesi' && totalSesi >= ach.req) earned = true;
+                    if (ach.type === 'to' && totalTO >= ach.req) earned = true;
+                    if (ach.type === 'skor' && maxSkor >= ach.req) earned = true;
+                    if (ach.type === 'salah' && totalSalah >= ach.req) earned = true;
+
+                    if (earned) {
+                        appData.unlockedAchievements.push(ach.id);
+                        newUnlocks.push(ach);
+                    }
+                }
+            });
+
+            if (newUnlocks.length > 0) {
+                saveAppData();
+                newUnlocks.forEach(ach => showToast(`Pencapaian Terbuka: ${ach.title}`, 'achievement'));
+                if (!document.getElementById('page-8').classList.contains('hidden')) renderBadges();
+            }
+        }
+
+        // Mobile Sidebar Controls
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => { overlay.classList.remove('opacity-0'); sidebar.classList.remove('-translate-x-full'); }, 10);
+            } else {
+                sidebar.classList.add('-translate-x-full'); overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+        function mobileSwitchTab(tabNum) { toggleMobileSidebar(); switchTab(tabNum); }
+
+        // Lightbox
+        let imgElement = null; let lbScale = 1; let lbX = 0, lbY = 0; let lbPointers = new Map(); let lbLastDist = 0; let lbLastMid = null; let lbDragStart = null; let lbLastTapTime = 0;
+        const LB_MIN_SCALE = 1; const LB_MAX_SCALE = 4;
+        function lbApplyTransform() { if(imgElement) imgElement.style.transform = `translate(${lbX}px, ${lbY}px) scale(${lbScale})`; }
+        function lbClamp() {
+            const container = document.getElementById('lightbox-img-container');
+            if (!container || !imgElement) return;
+            const rect = container.getBoundingClientRect();
+            const maxX = (rect.width * (lbScale - 1)) / 2 + rect.width * 0.15; const maxY = (rect.height * (lbScale - 1)) / 2 + rect.height * 0.15;
+            lbX = Math.max(-maxX, Math.min(maxX, lbX)); lbY = Math.max(-maxY, Math.min(maxY, lbY));
+        }
+        function lbReset() {
+            lbScale = 1; lbX = 0; lbY = 0; lbPointers.clear(); lbLastDist = 0; lbLastMid = null; lbDragStart = null;
+            if (imgElement) { imgElement.classList.remove('dragging'); lbApplyTransform(); }
+        }
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('photo-lightbox'); imgElement = document.getElementById('lightbox-img');
+            if (lightbox && imgElement) { imgElement.src = imageSrc; lbReset(); lightbox.classList.remove('hidden'); initPinchZoom(); }
+        }
+        function closeLightbox() { document.getElementById('photo-lightbox')?.classList.add('hidden'); lbReset(); }
+
+        function initPinchZoom() {
+            const container = document.getElementById('lightbox-img-container');
+            if (!container || !imgElement || container.dataset.lbInit === '1') return;
+            container.dataset.lbInit = '1';
+            const getMid = (p1, p2) => ({ x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 });
+            const getDist = (p1, p2) => Math.hypot(p1.x - p2.x, p1.y - p2.y);
+            container.addEventListener('pointerdown', (e) => {
+                container.setPointerCapture(e.pointerId); lbPointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+                if (lbPointers.size === 1) {
+                    const now = Date.now();
+                    if (now - lbLastTapTime < 300) {
+                        if (lbScale > 1) { lbScale = 1; lbX = 0; lbY = 0; } else { lbScale = 2.5; }
+                        lbApplyTransform(); lbLastTapTime = 0; return;
+                    }
+                    lbLastTapTime = now;
+                    lbDragStart = { x: e.clientX, y: e.clientY, startX: lbX, startY: lbY }; imgElement.classList.add('dragging');
+                } else if (lbPointers.size === 2) {
+                    const pts = Array.from(lbPointers.values());
+                    lbLastDist = getDist(pts[0], pts[1]); lbLastMid = getMid(pts[0], pts[1]); lbDragStart = null;
+                }
+            });
+            container.addEventListener('pointermove', (e) => {
+                if (!lbPointers.has(e.pointerId)) return;
+                lbPointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+                if (lbPointers.size === 2) {
+                    e.preventDefault(); const pts = Array.from(lbPointers.values());
+                    const dist = getDist(pts[0], pts[1]); const mid = getMid(pts[0], pts[1]);
+                    if (lbLastDist > 0) { const factor = dist / lbLastDist; lbScale = Math.max(LB_MIN_SCALE, Math.min(lbScale * factor, LB_MAX_SCALE)); }
+                    if (lbLastMid) { lbX += mid.x - lbLastMid.x; lbY += mid.y - lbLastMid.y; }
+                    lbLastDist = dist; lbLastMid = mid; lbClamp(); lbApplyTransform();
+                } else if (lbPointers.size === 1 && lbDragStart) {
+                    e.preventDefault(); const dx = e.clientX - lbDragStart.x; const dy = e.clientY - lbDragStart.y;
+                    lbX = lbDragStart.startX + dx; lbY = lbDragStart.startY + dy; lbClamp(); lbApplyTransform();
+                }
+            });
+            const endPointer = (e) => {
+                lbPointers.delete(e.pointerId);
+                if (lbPointers.size < 2) { lbLastDist = 0; lbLastMid = null; }
+                if (lbPointers.size === 0) { imgElement.classList.remove('dragging'); lbDragStart = null; if (lbScale <= 1) { lbScale = 1; lbX = 0; lbY = 0; lbApplyTransform(); } }
+            };
+            container.addEventListener('pointerup', endPointer); container.addEventListener('pointercancel', endPointer); container.addEventListener('pointerleave', endPointer);
+            container.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                if (e.deltaY < 0) lbScale = Math.min(lbScale + 0.3, LB_MAX_SCALE); else lbScale = Math.max(lbScale - 0.3, LB_MIN_SCALE);
+                if (lbScale <= 1) { lbX = 0; lbY = 0; }
+                lbClamp(); lbApplyTransform();
+            }, { passive: false });
+        }
+
+        // Tab Navigation
+        function switchTab(tabNum) {
+            for (let i = 1; i <= 10; i++) {
+                document.getElementById(`page-${i}`)?.classList.add('hidden');
+                document.getElementById(`nav-${i}`)?.classList.remove('bg-indigo-50', 'dark:bg-slate-800/80', 'text-indigo-600', 'dark:text-indigo-400');
+                document.getElementById(`m-nav-${i}`)?.classList.remove('bg-indigo-600', 'text-white');
+            }
+            document.getElementById(`page-${tabNum}`)?.classList.remove('hidden');
+            document.getElementById(`nav-${tabNum}`)?.classList.add('bg-indigo-50', 'dark:bg-slate-800/80', 'text-indigo-600', 'dark:text-indigo-400');
+            document.getElementById(`m-nav-${tabNum}`)?.classList.add('bg-indigo-600', 'text-white');
+
+            if (tabNum === 1) updateDashboard();
+            if (tabNum === 2) renderCalendar();
+            if (tabNum === 6) renderTOTable();
+            if (tabNum === 7) renderProgressPage();
+            if (tabNum === 8) renderBadges();
+            if (tabNum === 9) loadSettingsForm();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            try { await initDB(); } catch (err) { console.error('IndexedDB error', err); db = null; }
+            try { await loadAppData(); } catch (err) { console.error('Data load error', err); }
+            initTheme(); updateDashboard(); renderCalendar(); renderPlannerAndTodos(); renderMistakes();
+            setTOType('utbk'); setProgressType('utbk'); lucide.createIcons(); checkAchievements();
+        });
+
+        function initTheme() {
+            const isDark = localStorage.getItem('theme') !== 'light';
+            if (isDark) document.documentElement.classList.add('dark');
+            else document.documentElement.classList.remove('dark');
+        }
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        // Dashboard
+        function updateDashboard() {
+            const p = appData.profile || {};
+            document.getElementById('dash-user-name').innerText = p.name || 'Siswa Ambis';
+            document.getElementById('dash-target-univ').innerText = p.univ || 'Belum Diatur';
+            document.getElementById('dash-target-major').innerText = p.major || 'Belum Diatur';
+            document.getElementById('dash-target-score').innerText = p.targetScore || 0;
+            document.getElementById('dash-motivation').innerText = p.motivation ? `"${p.motivation}"` : '"Belum ada motivasi yang diatur."';
+
+            const logoImg = document.getElementById('dash-univ-logo');
+            const logoHolder = document.getElementById('dash-logo-placeholder');
+            if (p.logoB64) { logoImg.src = p.logoB64; logoImg.classList.remove('hidden'); logoHolder.classList.add('hidden'); } 
+            else { logoImg.classList.add('hidden'); logoHolder.classList.remove('hidden'); }
+
+            const targetUtbk = new Date('2027-05-01');
+            const diffDays = Math.max(0, Math.ceil((targetUtbk - new Date()) / (1000 * 60 * 60 * 24)));
+            document.getElementById('dash-utbk-countdown').innerText = diffDays;
+
+            const logs = appData.studyLogs || [];
+            const totalHours = logs.reduce((acc, curr) => acc + (parseFloat(curr.durationHours) || 0), 0);
+            const totalQuestions = logs.reduce((acc, curr) => acc + (parseInt(curr.questions) || 0), 0);
+            document.getElementById('dash-total-time').innerText = `${totalHours.toFixed(1)} Jam`;
+            document.getElementById('dash-total-questions').innerText = `${totalQuestions} Soal`;
+
+            const utbkTOs = (appData.toLogs || []).filter(t => t.type === 'utbk');
+            document.getElementById('dash-total-to').innerText = `${utbkTOs.length} Kali`;
+            
+            if (utbkTOs.length > 0) {
+                const sum = utbkTOs.reduce((acc, curr) => acc + (parseFloat(curr.average) || 0), 0);
+                document.getElementById('dash-avg-score').innerHTML = Math.round(sum / utbkTOs.length);
+            } else {
+                document.getElementById('dash-avg-score').innerHTML = '<span class="text-xs text-slate-400 font-medium">Belum Ada</span>';
+            }
+
+            const streak = calculateStreak();
+            const flameHtml = streak > 0 ? `<span class="animate-flame text-amber-500 drop-shadow-md">🔥</span>` : `<span class="opacity-40 grayscale text-slate-400">🔥</span>`;
+            document.getElementById('dash-streak').innerHTML = `${flameHtml} ${streak} Hari`;
+
+            const recentContainer = document.getElementById('dash-recent-list');
+            if (logs.length === 0) {
+                recentContainer.innerHTML = `<p class="text-slate-400 text-xs italic">Belum ada catatan aktivitas.</p>`;
+            } else {
+                recentContainer.innerHTML = [...logs].sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 3).map(l => `
+                    <div class="p-3 bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs">
+                        <div>
+                            <p class="font-bold text-slate-800 dark:text-slate-200">${l.category}</p>
+                            <p class="text-[10px] text-slate-400">${l.date} • ${l.durationHours} jam • ${l.questions || 0} soal</p>
+                        </div>
+                        <span class="px-2 py-0.5 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 font-semibold rounded-md text-[10px]">${l.location || 'Rumah'}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Calendar System
+        function renderCalendar() {
+            const year = calendarCurrentDate.getFullYear(); const month = calendarCurrentDate.getMonth();
+            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            document.getElementById('calendar-month-year').innerText = `${monthNames[month]} ${year}`;
+            
+            const firstDay = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const grid = document.getElementById('calendar-grid'); grid.innerHTML = '';
+
+            for (let i = 0; i < firstDay; i++) grid.innerHTML += `<div class="h-20 sm:h-24 bg-slate-50/50 dark:bg-slate-950/20 rounded-xl border border-slate-100 dark:border-slate-800/40"></div>`;
+
+            const todayStr = new Date().toISOString().split('T')[0];
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dayLogs = (appData.studyLogs || []).filter(l => l.date === dateStr);
+                const dayTOs = (appData.toLogs || []).filter(t => t.date === dateStr);
+                const isToday = dateStr === todayStr;
+
+                let bgColor = 'bg-rose-500/10 dark:bg-rose-950/30 border-rose-200 dark:border-rose-900/40'; let badgeText = 'Off'; let textColor = 'text-rose-600 dark:text-rose-400';
+                if (dayTOs.length > 0) { bgColor = 'bg-purple-500/15 dark:bg-purple-950/40 border-purple-300 dark:border-purple-800/50'; badgeText = `${dayTOs.length} TO`; textColor = 'text-purple-600 dark:text-purple-300'; } 
+                else if (dayLogs.length > 0) { bgColor = 'bg-emerald-500/15 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800/50'; badgeText = `${dayLogs.length} Sesi`; textColor = 'text-emerald-600 dark:text-emerald-300'; }
+
+                let hasPhoto = false; let totalHours = 0;
+                dayLogs.forEach(l => {
+                    totalHours += parseFloat(l.durationHours) || 0;
+                    if ((l.photos && l.photos.length > 0) || l.bookCoverPhotoId || (l.questionPhotoIds && l.questionPhotoIds.length > 0)) hasPhoto = true;
+                });
+
+                grid.innerHTML += `
+                    <div onclick="selectCalendarDate('${dateStr}')" class="h-20 sm:h-24 p-1.5 ${bgColor} rounded-xl border ${isToday ? 'ring-2 ring-indigo-500' : ''} hover:scale-[1.02] cursor-pointer transition flex flex-col justify-between overflow-hidden">
+                        <div class="flex justify-between items-center"><span class="text-xs font-extrabold ${isToday ? 'text-indigo-600 dark:text-indigo-400 underline' : 'text-slate-800 dark:text-slate-200'}">${day}</span>${hasPhoto ? '<span class="text-[9px]">📷</span>' : ''}</div>
+                        <div class="space-y-0.5"><div class="text-[9px] font-bold ${textColor} truncate">${badgeText}</div>${totalHours > 0 ? `<div class="text-[9px] text-slate-400 font-semibold">${totalHours.toFixed(1)}j</div>` : ''}</div>
+                    </div>`;
+            }
+        }
+        function changeMonth(delta) { calendarCurrentDate.setMonth(calendarCurrentDate.getMonth() + delta); renderCalendar(); }
+
+        async function selectCalendarDate(dateStr) {
+            document.getElementById('cal-selected-date').value = dateStr;
+            document.getElementById('detail-date-title').innerText = `Detail Tanggal: ${dateStr}`;
+            document.getElementById('calendar-detail-card').classList.remove('hidden');
+            const detailContent = document.getElementById('detail-content');
+
+            const logs = (appData.studyLogs || []).filter(l => l.date === dateStr);
+            const toLogs = (appData.toLogs || []).filter(t => t.date === dateStr);
+
+            if (logs.length === 0 && toLogs.length === 0) {
+                detailContent.innerHTML = `<p class="text-rose-400 text-xs italic">Tidak ada aktivitas belajar atau Tryout pada tanggal ini.</p>`;
+                return;
+            }
+
+            let html = '';
+            toLogs.forEach(t => {
+                html += `
+                    <div class="p-3 bg-purple-500/10 dark:bg-purple-950/40 rounded-xl border border-purple-300 dark:border-purple-800/50 space-y-1 text-xs">
+                        <div class="flex justify-between items-center font-bold text-purple-600 dark:text-purple-300">
+                            <span>🏆 ${t.title} (${t.type.toUpperCase()})</span><span>Rata-Rata: ${t.average}</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400">${t.notes || 'Tidak ada catatan TO.'}</p>
+                    </div>`;
+            });
+
+            for (let l of logs) {
+                let photoHtml = '';
+                if (l.bookCoverPhotoId) {
+                    const coverB64 = await getPhotoFromIDB(l.bookCoverPhotoId);
+                    if (coverB64) photoHtml += `<div class="mt-2"><p class="text-[10px] font-bold text-slate-400 uppercase mb-1">📕 Sampul Buku</p><img src="${coverB64}" onclick="openLightbox('${coverB64}')" class="w-14 h-14 object-cover rounded-lg border border-slate-700 cursor-pointer hover:scale-105 transition"></div>`;
+                }
+                if (l.photos && l.photos.length > 0) {
+                    photoHtml += '<p class="text-[10px] font-bold text-slate-400 uppercase mt-2 mb-1">📷 Foto Belajar</p><div class="flex flex-wrap gap-2">';
+                    for (let photoId of l.photos) { const b64 = await getPhotoFromIDB(photoId); if (b64) photoHtml += `<img src="${b64}" onclick="openLightbox('${b64}')" class="w-14 h-14 object-cover rounded-lg border border-slate-700 cursor-pointer hover:scale-105 transition">`; }
+                    photoHtml += '</div>';
+                }
+                if (l.questionPhotoIds && l.questionPhotoIds.length > 0) {
+                    photoHtml += '<p class="text-[10px] font-bold text-slate-400 uppercase mt-2 mb-1">📝 Foto Soal / Catatan</p><div class="flex flex-wrap gap-2">';
+                    for (let photoId of l.questionPhotoIds) { const b64 = await getPhotoFromIDB(photoId); if (b64) photoHtml += `<img src="${b64}" onclick="openLightbox('${b64}')" class="w-14 h-14 object-cover rounded-lg border border-slate-700 cursor-pointer hover:scale-105 transition">`; }
+                    photoHtml += '</div>';
+                }
+
+                html += `
+                    <div class="p-3 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1.5 text-xs relative">
+                        <div class="flex justify-between items-center font-bold text-slate-800 dark:text-slate-200">
+                            <span>📖 ${l.category}</span>
+                            <div class="flex gap-2">
+                                <span class="text-emerald-500 mr-2">${l.durationHours} Jam</span>
+                                <button onclick="editCalendarLog(${l.id})" class="text-indigo-500 hover:text-indigo-400" title="Edit"><i class="fas fa-edit"></i></button>
+                                <button onclick="confirmDeleteCal(${l.id})" class="text-rose-500 hover:text-rose-400" title="Hapus"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                        ${l.bookTitle ? `<p class="text-slate-400 text-[11px]">Buku: ${l.bookTitle} (${l.bookPages || '-'})</p>` : ''}
+                        ${l.notes ? `<p class="text-slate-300 italic text-[11px]">"${l.notes}"</p>` : ''}
+                        ${photoHtml}
+                    </div>`;
+            }
+            detailContent.innerHTML = html;
+        }
+        function closeDetailCard() { document.getElementById('calendar-detail-card').classList.add('hidden'); }
+
+        function openCalendarAddForm() {
+            document.getElementById('calendar-add-form').reset();
+            document.getElementById('cal-edit-id').value = '';
+            document.getElementById('cal-photo-hint').classList.add('hidden');
+            document.getElementById('cal-submit-btn').innerText = 'Simpan Aktivitas';
+            document.getElementById('calendar-add-form').classList.remove('hidden');
+        }
+        function closeCalendarAddForm() {
+            document.getElementById('calendar-add-form').classList.add('hidden');
+        }
+
+        function editCalendarLog(id) {
+            const log = appData.studyLogs.find(l => l.id === id);
+            if (!log) return;
+            document.getElementById('cal-edit-id').value = id;
+            document.getElementById('cal-category').value = log.category;
+            document.getElementById('cal-duration').value = log.durationHours;
+            document.getElementById('cal-questions').value = log.questions || '';
+            document.getElementById('cal-title').value = log.bookTitle || '';
+            document.getElementById('cal-notes').value = log.notes || '';
+            document.getElementById('cal-photo-hint').classList.remove('hidden');
+            document.getElementById('cal-submit-btn').innerText = 'Simpan Perubahan';
+            document.getElementById('calendar-add-form').classList.remove('hidden');
+        }
+
+        let deleteCalId = null;
+        function confirmDeleteCal(id) { deleteCalId = id; document.getElementById('confirm-delete-cal-modal').classList.remove('hidden'); }
+        function cancelDeleteCal() { document.getElementById('confirm-delete-cal-modal').classList.add('hidden'); deleteCalId = null; }
+        async function performDeleteCal() {
+            const dateStr = document.getElementById('cal-selected-date').value;
+            appData.studyLogs = appData.studyLogs.filter(l => l.id !== deleteCalId);
+            await saveAppData(); cancelDeleteCal(); selectCalendarDate(dateStr); renderCalendar(); updateDashboard(); checkAchievements();
+            showToast('✓ Data berhasil dihapus');
+        }
+
+        async function saveCalendarSession(e) {
+            e.preventDefault();
+            const editId = document.getElementById('cal-edit-id').value;
+            const date = document.getElementById('cal-selected-date').value;
+            const category = document.getElementById('cal-category').value;
+            const durationHours = document.getElementById('cal-duration').value;
+            const questions = document.getElementById('cal-questions').value;
+            const bookTitle = document.getElementById('cal-title').value;
+            const notes = document.getElementById('cal-notes').value;
+
+            const photoFiles = document.getElementById('cal-photos').files;
+            
+            let finalPhotos = [];
+            if (editId) {
+                const existing = appData.studyLogs.find(l => l.id == editId);
+                if (existing && existing.photos) finalPhotos = existing.photos;
+            }
+
+            if (photoFiles.length > 0) {
+                finalPhotos = [];
+                for (let file of photoFiles) {
+                    const b64 = await fileToBase64(file);
+                    const id = await savePhotoToIDB(b64);
+                    if (id) finalPhotos.push(id);
+                }
+            }
+
+            if (editId) {
+                const idx = appData.studyLogs.findIndex(l => l.id == editId);
+                appData.studyLogs[idx] = { ...appData.studyLogs[idx], category, durationHours, questions, bookTitle, notes, photos: finalPhotos };
+                showToast('✓ Data berhasil diperbarui');
+            } else {
+                appData.studyLogs.push({ id: Date.now(), date, category, durationHours, questions, bookTitle, notes, photos: finalPhotos });
+                showToast('✓ Data berhasil disimpan');
+            }
+
+            await saveAppData(); closeCalendarAddForm(); selectCalendarDate(date); renderCalendar(); updateDashboard(); checkAchievements();
+        }
+
+        // Timer
+        let timerInterval; let timerTotalSeconds = 1500; let timerRunning = false;
+        function resetTimer() {
+            clearInterval(timerInterval); timerRunning = false; document.getElementById('timer-start-btn').innerText = 'Start';
+            timerTotalSeconds = (parseInt(document.getElementById('timer-hours').value)||0)*3600 + (parseInt(document.getElementById('timer-minutes').value)||0)*60 + (parseInt(document.getElementById('timer-seconds-input').value)||0);
+            updateTimerDisplay();
+        }
+        function updateTimerDisplay() {
+            const h = Math.floor(timerTotalSeconds / 3600); const m = Math.floor((timerTotalSeconds % 3600) / 60); const s = timerTotalSeconds % 60;
+            document.getElementById('timer-display').innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+        function toggleTimer() {
+            if (timerRunning) { clearInterval(timerInterval); timerRunning = false; document.getElementById('timer-start-btn').innerText = 'Start'; } 
+            else {
+                if (timerTotalSeconds <= 0) resetTimer();
+                timerRunning = true; document.getElementById('timer-start-btn').innerText = 'Pause';
+                timerInterval = setInterval(() => {
+                    if (timerTotalSeconds > 0) { timerTotalSeconds--; updateTimerDisplay(); } 
+                    else { clearInterval(timerInterval); timerRunning = false; document.getElementById('timer-start-btn').innerText = 'Start'; alert('Timer Selesai!'); }
+                }, 1000);
+            }
+        }
+
+        // Planner & Todo
+        async function savePlannerTask(e) { e.preventDefault(); appData.plannerTasks.push({ id: Date.now(), date: document.getElementById('planner-date').value, category: document.getElementById('planner-category').value, title: document.getElementById('planner-title').value, done: false }); await saveAppData(); e.target.reset(); renderPlannerAndTodos(); showToast('Planner ditambahkan'); }
+        async function saveTodoItem(e) { e.preventDefault(); appData.todoItems.push({ id: Date.now(), text: document.getElementById('todo-text').value, done: false }); await saveAppData(); e.target.reset(); renderPlannerAndTodos(); showToast('To-Do ditambahkan'); }
+        function renderPlannerAndTodos() {
+            const planC = document.getElementById('planner-list'); const todoC = document.getElementById('todo-list');
+            planC.innerHTML = (appData.plannerTasks||[]).length === 0 ? `<p class="text-slate-400 text-xs italic">Belum ada planner.</p>` : appData.plannerTasks.map(t => `<div class="flex items-center justify-between p-2 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-xs"><div class="flex items-center gap-2"><input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTaskDone(${t.id})" class="rounded text-indigo-600"><span class="${t.done ? 'line-through text-slate-500' : 'text-slate-800 dark:text-slate-200'} font-medium">${t.title} (${t.category})</span></div><button onclick="deleteTask(${t.id})" class="text-slate-400 hover:text-rose-500"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></div>`).join('');
+            todoC.innerHTML = (appData.todoItems||[]).length === 0 ? `<p class="text-slate-400 text-xs italic">Belum ada tugas to-do.</p>` : appData.todoItems.map(t => `<div class="flex items-center justify-between p-2 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-xs"><div class="flex items-center gap-2"><input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTodoDone(${t.id})" class="rounded text-indigo-600"><span class="${t.done ? 'line-through text-slate-500' : 'text-slate-800 dark:text-slate-200'} font-medium">${t.text}</span></div><button onclick="deleteTodo(${t.id})" class="text-slate-400 hover:text-rose-500"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></div>`).join('');
+            lucide.createIcons();
+        }
+        async function toggleTaskDone(id) { const t = appData.plannerTasks.find(x => x.id === id); if (t) { t.done = !t.done; await saveAppData(); renderPlannerAndTodos(); } }
+        async function deleteTask(id) { appData.plannerTasks = appData.plannerTasks.filter(x => x.id !== id); await saveAppData(); renderPlannerAndTodos(); }
+        async function toggleTodoDone(id) { const t = appData.todoItems.find(x => x.id === id); if (t) { t.done = !t.done; await saveAppData(); renderPlannerAndTodos(); } }
+        async function deleteTodo(id) { appData.todoItems = appData.todoItems.filter(x => x.id !== id); await saveAppData(); renderPlannerAndTodos(); }
+
+        // Main Study Session (Halaman 4)
+        async function saveStudySession(e) {
+            e.preventDefault();
+            try {
+                const editId = document.getElementById('edit-study-id').value;
+                const newLog = {
+                    id: editId ? parseInt(editId) : Date.now(),
+                    date: document.getElementById('study-date').value,
+                    durationHours: document.getElementById('study-duration-hours').value,
+                    location: document.getElementById('study-location').value,
+                    category: document.getElementById('study-category').value,
+                    questions: document.getElementById('study-questions').value,
+                    bookTitle: document.getElementById('book-title').value,
+                    bookPages: document.getElementById('book-pages').value,
+                    notes: document.getElementById('study-notes').value,
+                };
+
+                let finalPhotos = []; let finalBookCover = null; let finalQuestionPhotos = [];
+                if(editId) {
+                    const exist = appData.studyLogs.find(l => l.id == editId);
+                    if(exist) { finalPhotos = exist.photos||[]; finalBookCover = exist.bookCoverPhotoId; finalQuestionPhotos = exist.questionPhotoIds||[]; }
+                }
+
+                const sPhotos = document.getElementById('study-photos').files; if(sPhotos.length>0){ finalPhotos=[]; for(let f of sPhotos) {let i=await savePhotoToIDB(await fileToBase64(f)); if(i) finalPhotos.push(i);} }
+                const cPhoto = document.getElementById('book-cover-photo').files[0]; if(cPhoto) { finalBookCover = await savePhotoToIDB(await fileToBase64(cPhoto)); }
+                const qPhotos = document.getElementById('question-photos').files; if(qPhotos.length>0){ finalQuestionPhotos=[]; for(let f of qPhotos) {let i=await savePhotoToIDB(await fileToBase64(f)); if(i) finalQuestionPhotos.push(i);} }
+
+                newLog.photos = finalPhotos; newLog.bookCoverPhotoId = finalBookCover; newLog.questionPhotoIds = finalQuestionPhotos;
+
+                if(editId) { const idx = appData.studyLogs.findIndex(l => l.id == editId); appData.studyLogs[idx] = newLog; showToast('✓ Data berhasil diperbarui'); } 
+                else { appData.studyLogs.push(newLog); showToast('✓ Data belajar berhasil disimpan'); }
+
+                await saveAppData(); e.target.reset(); document.getElementById('edit-study-id').value = ''; renderCalendar(); updateDashboard(); checkAchievements(); switchTab(1);
+            } catch (err) { showToast('Gagal menyimpan foto. Coba kurangi ukuran', 'error'); }
+        }
+        function fileToBase64(file) { return new Promise((res) => { const r = new FileReader(); r.onload = (e) => res(e.target.result); r.onerror = () => res(null); r.readAsDataURL(file); }); }
+
+        // Bank Kesalahan
+        async function saveMistake(e) {
+            e.preventDefault(); appData.mistakes.push({ id: Date.now(), subtest: document.getElementById('mistake-subtest').value, material: document.getElementById('mistake-material').value, question: document.getElementById('mistake-question').value, answer: document.getElementById('mistake-answer').value, reason: document.getElementById('mistake-reason').value });
+            await saveAppData(); e.target.reset(); renderMistakes(); checkAchievements(); showToast('Kesalahan disimpan ke bank!');
+        }
+        function renderMistakes() {
+            const listC = document.getElementById('mistake-list'); const rankC = document.getElementById('mistake-ranking');
+            if ((appData.mistakes||[]).length === 0) { listC.innerHTML = `<p class="text-slate-400 text-xs italic">Belum ada catatan.</p>`; rankC.innerHTML = `<p class="text-slate-400 text-xs italic">Belum ada ranking.</p>`; return; }
+            listC.innerHTML = appData.mistakes.map(m => `<div class="p-3 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1 text-xs"><div class="flex justify-between items-center font-bold"><span class="text-rose-500">${m.subtest} — ${m.material}</span><span class="text-[10px] bg-rose-500/10 text-rose-400 px-2 py-0.5 rounded">${m.reason}</span></div><p class="text-slate-700 dark:text-slate-300 font-medium">Soal: ${m.question}</p><p class="text-emerald-600 dark:text-emerald-400 text-[11px]">Solusi: ${m.answer}</p></div>`).join('');
+            const counts = {}; appData.mistakes.forEach(m => { counts[m.material] = (counts[m.material] || 0) + 1; });
+            rankC.innerHTML = Object.entries(counts).sort((a,b) => b[1] - a[1]).slice(0,5).map(([mat, count], idx) => `<div class="flex items-center justify-between p-2 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold"><span class="text-slate-700 dark:text-slate-300">#${idx+1} ${mat}</span><span class="text-rose-500 font-bold">${count} Salah</span></div>`).join('');
+        }
+
+        // Tryout System (Tetap pertahankan input UTBK)
+        const utbkSubtests = ['PU', 'PBM', 'PPU', 'PK', 'Literasi B. Indo', 'Literasi B. Inggris', 'Penalaran MTK'];
+        const intenSubjects = ['PU', 'PK', 'B. Indonesia', 'B. Inggris', 'Matematika', 'Fisika', 'Kimia', 'Biologi'];
+
+        function setTOType(type) {
+            currentTOType = type;
+            const container = document.getElementById('to-inputs-container');
+            if (type === 'utbk') {
+                document.getElementById('to-tab-utbk').className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all bg-indigo-600 text-white shadow-md";
+                document.getElementById('to-tab-inten').className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400";
+                document.getElementById('to-form-title').innerHTML = `<i data-lucide="file-check-2" class="w-5 h-5 text-indigo-500"></i> Input Nilai Tryout UTBK (Skala 200-1000)`;
+                container.innerHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">${utbkSubtests.map((sub, i) => `<div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">${sub}</label><input type="number" id="to-sub-${i}" min="0" max="1000" placeholder="0 - 1000" onchange="calculateTOAvg()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs font-semibold"></div>`).join('')}</div>`;
+            } else {
+                document.getElementById('to-tab-inten').className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all bg-purple-600 text-white shadow-md";
+                document.getElementById('to-tab-utbk').className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400";
+                document.getElementById('to-form-title').innerHTML = `<i data-lucide="file-check-2" class="w-5 h-5 text-purple-500"></i> Input Nilai Tryout Mapel INTEN`;
+                container.innerHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">${intenSubjects.map((sub, i) => `<div><label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">${sub}</label><input type="number" id="to-sub-${i}" min="0" max="30" placeholder="Contoh: 10 - 20" onchange="calculateTOAvg()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs font-semibold"></div>`).join('')}</div>`;
+            }
+            lucide.createIcons(); calculateTOAvg(); renderTOTable();
+        }
+
+        function calculateTOAvg() {
+            const list = currentTOType === 'utbk' ? utbkSubtests : intenSubjects;
+            let sum = 0; let count = 0;
+            list.forEach((_, i) => { const val = parseFloat(document.getElementById(`to-sub-${i}`)?.value) || 0; if (val > 0) { sum += val; count++; } });
+            const avg = count > 0 ? (sum / count).toFixed(1) : 0;
+            document.getElementById('to-avg-preview').innerText = avg; return avg;
+        }
+
+        async function saveTOSession(e) {
+            e.preventDefault();
+            const editId = document.getElementById('edit-to-id').value;
+            const title = document.getElementById('to-title').value.trim(); const date = document.getElementById('to-date').value; const notes = document.getElementById('to-notes').value;
+            const list = currentTOType === 'utbk' ? utbkSubtests : intenSubjects;
+            const scores = {}; list.forEach((sub, i) => { scores[sub] = parseFloat(document.getElementById(`to-sub-${i}`)?.value) || 0; });
+            const avg = calculateTOAvg();
+
+            if (editId) {
+                const idx = appData.toLogs.findIndex(t => t.id == editId);
+                appData.toLogs[idx] = { id: parseInt(editId), type: currentTOType, title, date, scores, average: avg, notes };
+                showToast('✓ Data TO berhasil diperbarui');
+            } else {
+                appData.toLogs.push({ id: Date.now(), type: currentTOType, title, date, scores, average: avg, notes });
+                showToast('✓ Data TO berhasil disimpan');
+            }
+            
+            await saveAppData(); resetTOForm(); renderTOTable(); renderCalendar(); updateDashboard(); renderProgressPage(); checkAchievements();
+        }
+
+        function editTO(id) {
+            const to = appData.toLogs.find(t => t.id === id);
+            if (!to) return;
+            setTOType(to.type);
+            document.getElementById('edit-to-id').value = id;
+            document.getElementById('to-title').value = to.title;
+            document.getElementById('to-date').value = to.date;
+            document.getElementById('to-notes').value = to.notes || '';
+            const list = to.type === 'utbk' ? utbkSubtests : intenSubjects;
+            list.forEach((sub, i) => { const el = document.getElementById(`to-sub-${i}`); if(el) el.value = to.scores[sub] || ''; });
+            calculateTOAvg();
+            document.getElementById('to-submit-btn').innerText = 'Simpan Perubahan';
+            document.getElementById('to-cancel-btn').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetTOForm() {
+            document.getElementById('edit-to-id').value = '';
+            document.getElementById('to-title').value = '';
+            document.getElementById('to-date').value = '';
+            document.getElementById('to-notes').value = '';
+            const list = currentTOType === 'utbk' ? utbkSubtests : intenSubjects;
+            list.forEach((sub, i) => { const el = document.getElementById(`to-sub-${i}`); if(el) el.value = ''; });
+            calculateTOAvg();
+            document.getElementById('to-submit-btn').innerText = 'Simpan Nilai Tryout';
+            document.getElementById('to-cancel-btn').classList.add('hidden');
+        }
+
+        let deleteToId = null;
+        function confirmDeleteTO(id) { deleteToId = id; document.getElementById('confirm-delete-to-modal').classList.remove('hidden'); }
+        function cancelDeleteTO() { document.getElementById('confirm-delete-to-modal').classList.add('hidden'); deleteToId = null; }
+        async function performDeleteTO() {
+            appData.toLogs = appData.toLogs.filter(t => t.id !== deleteToId);
+            await saveAppData(); cancelDeleteTO(); renderTOTable(); updateDashboard(); renderProgressPage(); checkAchievements();
+            showToast('✓ Data TO berhasil dihapus');
+        }
+
+        function renderTOTable() {
+            const container = document.getElementById('to-history-list'); const logs = (appData.toLogs || []).filter(t => t.type === currentTOType);
+            document.getElementById('to-history-title').innerText = `Riwayat Tryout ${currentTOType.toUpperCase()}`;
+            if (logs.length === 0) { container.innerHTML = `<p class="text-slate-400 text-xs italic">Belum ada riwayat TO.</p>`; return; }
+            container.innerHTML = logs.map(t => `
+                <div class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
+                    <div class="flex justify-between items-center font-bold">
+                        <span class="text-slate-800 dark:text-slate-200">${t.title} (${t.date})</span>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-1 bg-indigo-500/10 text-indigo-500 rounded-lg font-black mr-2">Avg: ${t.average}</span>
+                            <button onclick="editTO(${t.id})" class="text-indigo-500 hover:text-indigo-400"><i class="fas fa-edit"></i></button>
+                            <button onclick="confirmDeleteTO(${t.id})" class="text-rose-500 hover:text-rose-400"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] pt-1 border-t border-slate-200 dark:border-slate-800">
+                        ${Object.entries(t.scores || {}).map(([sub, val]) => `<div><span class="text-slate-400 font-medium">${sub}:</span> <span class="font-bold text-slate-700 dark:text-slate-300">${val}</span></div>`).join('')}
+                    </div>
+                    ${t.notes ? `<p class="text-slate-400 italic text-[11px]">"${t.notes}"</p>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Progress & Charts
+        function setProgressType(type) {
+            currentProgressType = type;
+            if (type === 'utbk') {
+                document.getElementById('progress-tab-utbk').className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all bg-indigo-600 text-white shadow-md";
+                document.getElementById('progress-tab-inten').className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400";
+            } else {
+                document.getElementById('progress-tab-inten').className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all bg-purple-600 text-white shadow-md";
+                document.getElementById('progress-tab-utbk').className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-xs transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400";
+            }
+            renderProgressPage();
+        }
+
+        function renderProgressPage() {
+            const logs = (appData.toLogs || []).filter(t => t.type === currentProgressType).sort((a,b) => new Date(a.date) - new Date(b.date));
+            const target = currentProgressType === 'utbk' ? (appData.profile.targetScore || 700) : 20;
+            document.getElementById('dash-progress-target').innerText = target;
+            let latestAvg = logs.length > 0 ? logs[logs.length - 1].average : 0;
+            const percent = Math.min(100, Math.round((latestAvg / target) * 100));
+            document.getElementById('dash-progress-percent').innerText = percent; document.getElementById('dash-progress-bar').style.width = `${percent}%`;
+
+            if (logs.length > 0) {
+                const subSums = {}; const subCounts = {};
+                logs.forEach(l => { Object.entries(l.scores || {}).forEach(([sub, score]) => { subSums[sub] = (subSums[sub] || 0) + score; subCounts[sub] = (subCounts[sub] || 0) + 1; }); });
+                let lowestSub = ''; let lowestAvg = 9999;
+                Object.keys(subSums).forEach(sub => { const avg = subSums[sub] / subCounts[sub]; if (avg < lowestAvg) { lowestAvg = avg; lowestSub = sub; } });
+                document.getElementById('progress-analysis-title').innerText = `Kelemahan: ${lowestSub}`;
+                document.getElementById('progress-analysis-desc').innerText = `Nilai rata-rata ${lowestSub} kamu adalah ${lowestAvg.toFixed(1)}. Tingkatkan latihan!`;
+            } else {
+                document.getElementById('progress-analysis-title').innerText = `Belum Ada Data`;
+                document.getElementById('progress-analysis-desc').innerText = `Input nilai Tryout terlebih dahulu agar sistem bisa menganalisis kelemahanmu.`;
+            }
+            renderTrendChart(logs); renderSubtestChart(logs); renderCategoryChart();
+        }
+
+        function renderTrendChart(logs) {
+            const ctx = document.getElementById('toTrendChart')?.getContext('2d'); if (!ctx) return;
+            if (trendChartInstance) trendChartInstance.destroy();
+            document.getElementById('trend-chart-title').innerText = `Trend Rata-Rata Skor ${currentProgressType.toUpperCase()}`;
+            trendChartInstance = new Chart(ctx, { type: 'line', data: { labels: logs.map((l, i) => `TO #${i+1}`), datasets: [{ label: 'Skor', data: logs.map(l => l.average), borderColor: '#6366f1', backgroundColor: 'rgba(99,102,241,0.1)', fill: true, tension: 0.3, borderWidth: 3 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: currentProgressType === 'utbk' ? 200 : 0, max: currentProgressType === 'utbk' ? 1000 : 30 } } } });
+        }
+
+        function renderSubtestChart(logs) {
+            const ctx = document.getElementById('subtestTrendChart')?.getContext('2d'); if (!ctx) return;
+            if (subtestChartInstance) subtestChartInstance.destroy();
+            const subjects = currentProgressType === 'utbk' ? utbkSubtests : intenSubjects;
+            const colors = { 'PK':'#ef4444','PU':'#3b82f6','PBM':'#10b981','PPU':'#f59e0b','Literasi B. Indo':'#8b5cf6','Literasi B. Inggris':'#ec4899','Penalaran MTK':'#06b6d4','Fisika':'#14b8a6','Kimia':'#f97316','Biologi':'#84cc16' };
+            const datasets = subjects.map(sub => ({ label: sub, data: logs.map(l => l.scores ? (l.scores[sub] || 0) : 0), borderColor: colors[sub] || '#94a3b8', borderWidth: 2, tension: 0.2 }));
+            subtestChartInstance = new Chart(ctx, { type: 'line', data: { labels: logs.map((l, i) => `TO #${i+1}`), datasets }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }, scales: { y: { min: currentProgressType === 'utbk' ? 200 : 0, max: currentProgressType === 'utbk' ? 1000 : 30 } } } });
+        }
+
+        function renderCategoryChart() {
+            const ctx = document.getElementById('categoryChart')?.getContext('2d'); if (!ctx) return;
+            if (categoryChartInstance) categoryChartInstance.destroy();
+            const catMap = {}; (appData.studyLogs || []).forEach(l => { catMap[l.category] = (catMap[l.category] || 0) + (parseFloat(l.durationHours) || 0); });
+            categoryChartInstance = new Chart(ctx, { type: 'doughnut', data: { labels: Object.keys(catMap).length > 0 ? Object.keys(catMap) : ['Belum Ada'], datasets: [{ data: Object.keys(catMap).length > 0 ? Object.values(catMap) : [1], backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899'] }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } });
+        }
+
+        // Achievements / Badges
+        function renderBadges() {
+            const container = document.getElementById('badges-grid');
+            if (!appData.unlockedAchievements) appData.unlockedAchievements = [];
+            container.innerHTML = ACHIEVEMENT_LIST.map(b => {
+                const earned = appData.unlockedAchievements.includes(b.id);
+                return `
+                <div class="p-4 rounded-2xl border ${earned ? 'bg-amber-500/10 border-amber-500/30 text-amber-500 shadow-sm' : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-400 opacity-60'} text-center space-y-2 flex flex-col justify-between">
+                    <div class="w-10 h-10 mx-auto rounded-full ${earned ? 'bg-amber-500 text-white' : 'bg-slate-200 dark:bg-slate-800'} flex items-center justify-center font-bold relative">
+                        ${earned ? '🏅' : '<i class="fas fa-lock text-slate-400 text-sm"></i>'}
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-[11px] text-slate-900 dark:text-white leading-tight">${b.title}</h4>
+                        <p class="text-[9px] mt-1 line-clamp-2">${b.desc}</p>
+                    </div>
+                    <div class="text-[9px] font-black uppercase mt-1 tracking-wider ${earned ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}">${earned ? '✓ Tercapai' : '🔒 Belum'}</div>
+                </div>`;
+            }).join('');
+        }
+
+        // Settings Form
+        function loadSettingsForm() {
+            const p = appData.profile || {};
+            const el = id => document.getElementById(id);
+            el('set-name').value=''; el('set-univ').value=''; el('set-major').value=''; el('set-score').value=''; el('set-motivation').value=''; el('set-logo').value='';
+            el('set-name').placeholder = p.name ? `Saat ini: ${p.name}` : 'Nama Lengkap';
+            el('set-univ').placeholder = p.univ ? `Saat ini: ${p.univ}` : 'Contoh: Universitas Gadjah Mada';
+            el('set-major').placeholder = p.major ? `Saat ini: ${p.major}` : 'Contoh: Manajemen';
+            el('set-score').placeholder = p.targetScore ? `Saat ini: ${p.targetScore}` : 'Contoh: 750';
+            el('set-motivation').placeholder = p.motivation ? `Saat ini: "${p.motivation}"` : 'Tulis kalimat motivasi kamu di sini...';
+        }
+        function saveSettings(e) { e.preventDefault(); document.getElementById('confirm-settings-modal').classList.remove('hidden'); }
+        function cancelSaveSettings() { document.getElementById('confirm-settings-modal').classList.add('hidden'); }
+        async function performSaveSettings() {
+            document.getElementById('confirm-settings-modal').classList.add('hidden');
+            const old = appData.profile || {}; const el = id => document.getElementById(id).value.trim();
+            const logoFile = document.getElementById('set-logo').files[0];
+            appData.profile = { name: el('set-name')||old.name||'', univ: el('set-univ')||old.univ||'', major: el('set-major')||old.major||'', targetScore: el('set-score')?parseInt(el('set-score')):old.targetScore||700, motivation: el('set-motivation')||old.motivation||'', logoB64: logoFile ? await fileToBase64(logoFile) : old.logoB64||'' };
+            await saveAppData(); updateDashboard(); loadSettingsForm(); showToast('✓ Pengaturan Profil Disimpan');
+        }
+
+        function exportData() { const d = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData)); const a = document.createElement('a'); a.setAttribute("href", d); a.setAttribute("download", `Belajarku_V4_${new Date().toISOString().split('T')[0]}.json`); document.body.appendChild(a); a.click(); a.remove(); }
+        function importData(e) { const f = e.target.files[0]; if(!f)return; const r = new FileReader(); r.onload = async(evt) => { try{ appData = JSON.parse(evt.target.result); await saveAppData(); showToast('Data Berhasil Diimport'); window.location.reload(); }catch(err){ showToast('JSON Tidak Valid', 'error'); } }; r.readAsText(f); }
+    </script>
+</body>
+</html>
